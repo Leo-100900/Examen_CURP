@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de CURP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef; 
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #003366; 
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: auto;
+        }
+        .campo {
+            margin: 10px;
+            flex-basis: calc(50% - 20px);
+        }
+        .campo label {
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase; 
+        }
+        .campo input, .campo select {
+            width: 100%;
+            padding: 10px; 
+            border: 1px solid #003366; 
+            border-radius: 4px;
+            box-sizing: border-box; 
+            text-transform: uppercase; 
+        }
+        .campo.button {
+            flex-basis: 100%;
+            text-align: center;
+        }
+        .campo.button input {
+            width: auto;
+            padding: 15px 30px; 
+            font-size: 1.2em; 
+            background-color: #003366; 
+            color: white; 
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .campo.button input:hover {
+            background-color: #005599; 
+        }
+        .resultado {
+            border: 2px solid #003366; 
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        .nombre-completo {
+            font-size: 1.5em;
+            color: #003366; 
+            text-transform: uppercase;
+        }
+        .curp {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #333;
+            text-transform: uppercase;
+        }
+        .alert {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de CURP</h1>
+    <form method="POST">
+        <div class="campo">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="campo">
+            <label for="apellido_paterno">Apellido Paterno:</label>
+            <input type="text" id="apellido_paterno" name="apellido_paterno" required>
+        </div>
+        <div class="campo">
+            <label for="apellido_materno">Apellido Materno:</label>
+            <input type="text" id="apellido_materno" name="apellido_materno" required>
+        </div>
+        <div class="campo">
+            <label for="año">Año:</label>
+            <select id="año" name="año" required>
+                <option value="">Seleccione un año</option>
+                {% for year in range(2024, 1899, -1) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="campo">
+            <label for="mes">Mes:</label>
+            <select id="mes" name="mes" required>
+                <option value="">Seleccione un mes</option>
+                <option value="01">Enero</option>
+                <option value="02">Febrero</option>
+                <option value="03">Marzo</option>
+                <option value="04">Abril</option>
+                <option value="05">Mayo</option>
+                <option value="06">Junio</option>
+                <option value="07">Julio</option>
+                <option value="08">Agosto</option>
+                <option value="09">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+        </div>
+        <div class="campo">
+            <label for="dia">Día:</label>
+            <select id="dia" name="dia" required>
+                <option value="">Seleccione un día</option>
+                {% for day in range(1, 32) %}
+                    <option value="{{ '{:02d}'.format(day) }}">{{ day }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="campo">
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="">Seleccione un género</option>
+                <option value="H">Masculino</option>
+                <option value="M">Femenino</option>
+            </select>
+        </div>
+        <div class="campo">
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado" required>
+                <option value="">Seleccione un estado</option>
+                <option value="AGUASCALIENTES">AGUASCALIENTES</option>
+                <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
+                <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
+                <option value="CAMPECHE">CAMPECHE</option>
+                <option value="COLIMA">COLIMA</option>
+                <option value="COAHUILA">COAHUILA</option>
+                <option value="CHIAPAS">CHIAPAS</option>
+                <option value="CHIHUAHUA">CHIHUAHUA</option>
+                <option value="DURANGO">DURANGO</option>
+                <option value="GUANAJUATO">GUANAJUATO</option>
+                <option value="GUERRERO">GUERRERO</option>
+                <option value="HIDALGO">HIDALGO</option>
+                <option value="JALISCO">JALISCO</option>
+                <option value="MÉXICO">MÉXICO</option>
+                <option value="MICHOACÁN">MICHOACÁN</option>
+                <option value="MORELOS">MORELOS</option>
+                <option value="NAYARIT">NAYARIT</option>
+                <option value="NUEVO LEÓN">NUEVO LEÓN</option>
+                <option value="OAXACA">OAXACA</option>
+                <option value="PUEBLA">PUEBLA</option>
+                <option value="QUERÉTARO">QUERÉTARO</option>
+                <option value="QUINTANA ROO">QUINTANA ROO</option>
+                <option value="SAN LUIS POTOSÍ">SAN LUIS POTOSÍ</option>
+            </select>
+        </div>
+        <div class="campo button">
+            <input type="submit" value="Generar CURP">
+        </div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+    {% if curp %}
+    <div class="resultado">
+        <div class="nombre-completo">{{ nombre }} {{ apellido_paterno }} {{ apellido_materno }}</div>
+        <div class="curp">CURP: {{ curp }}</div>
+    </div>
+    {% endif %}
+</body>
+</html>
